@@ -3,7 +3,9 @@ import Background from './images/bg.jpg';
 
 export const AppDiv = styled.div`
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 5rem 0rem;
     position: relative;
     display: flex;
     flex-direction: column;
