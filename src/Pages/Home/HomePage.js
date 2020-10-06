@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import ReactPlayer from 'react-player';
-import { Title } from './Home.styles';
+import { Title } from './HomePage.styles';
 
 // Home Page content with Title and Video Player
-const Home = ({ socket, url, playing, setUrl, setPlaying }) => {
+const HomePage = ({ socket, url, playing, setUrl, setPlaying }) => {
 
     // https://www.youtube.com/watch?v=HRdLNFl4-mU
 
@@ -36,4 +36,4 @@ const Home = ({ socket, url, playing, setUrl, setPlaying }) => {
     )
 }
 
-export default Home;
+export default HomePage;

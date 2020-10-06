@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Title } from '../Home/Home.styles';
+import { Title } from '../Home/HomePage.styles';
 import { StyledButton } from '../../components/Header/Header.styles';
-import { RemoteDiv, StyledInput, InputContainer, WatchButton, RemoteContainer } from './Remote.styles';
+import { RemoteDiv, StyledInput, InputContainer, Remote } from './RemotePage.styles';
 
-const Remote = ({ socket, setUrl }) => {
+const RemotePage = ({ socket, setUrl }) => {
     // state for url Input
     const [urlInput, setUrlInput] = useState('');
 
@@ -48,9 +48,9 @@ const Remote = ({ socket, setUrl }) => {
                 />
                 <StyledButton style={{marginRight: 0}}onClick={handleSubmit}>Watch Video</StyledButton>
             </InputContainer>
-            <RemoteContainer />
+            <Remote />
         </RemoteDiv>
     )
 }
 
-export default Remote;
+export default RemotePage;

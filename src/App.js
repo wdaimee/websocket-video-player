@@ -3,8 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import socketIOClient from 'socket.io-client';
 import { AppDiv } from './App.styles';
 import Header from './components/Header/Header';
-import Home from './Pages/Home/Home';
-import Remote from './Pages/Remote/Remote';
+import HomePage from './Pages/Home/HomePage';
+import RemotePage from './Pages/Remote/RemotePage';
 
 const ENDPOINT = "http://localhost:3001";
 const socket = socketIOClient(ENDPOINT);
@@ -36,7 +36,7 @@ function App() {
       <Header />
       <Switch>
         <Route exact path ='/' render={() => 
-          <Home 
+          <HomePage 
             socket={socket}
             url={url}
             playing={playing}
@@ -45,7 +45,7 @@ function App() {
           />
         } />
         <Route exact path ='/remote' render={() => 
-          <Remote 
+          <RemotePage 
             socket={socket}
             url={url}
             playing={playing}

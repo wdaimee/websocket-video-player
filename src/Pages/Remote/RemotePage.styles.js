@@ -22,11 +22,11 @@ export const InputContainer = styled.div`
 // Styling for input
 export const StyledInput = styled.input`
     box-sizing: border-box;
-    padding: 10px;
+    padding: 0.625rem;
     font-size: 1rem;
     color: black;
     width: 30%;
-    border-radius: 5px;
+    border-radius: 0.3125rem;
     border: none;
 
     &:focus {
@@ -34,10 +34,11 @@ export const StyledInput = styled.input`
     }
 `;
 
-export const RemoteContainer = styled.div`
-    width: 400px;
-    height: 600px;
+// Styling for the remote control that will be displayed on remote page
+export const Remote = styled.div`
+    width: 25rem;
+    height: 37.5rem;
     background-color: #111111;
-    border-radius: 50px;
-    margin: 40px 0px;
+    border-radius: 3.125rem;
+    margin: 2.5rem 0rem;
 `;
