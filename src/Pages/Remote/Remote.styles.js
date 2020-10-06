@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { StyledButton } from '../../components/Header/Header.styles';
 
 export const RemoteDiv = styled.div`
     width: 100%;
@@ -12,6 +11,7 @@ export const RemoteDiv = styled.div`
 `;
 
 export const InputContainer = styled.div`
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -25,7 +25,7 @@ export const StyledInput = styled.input`
     padding: 10px;
     font-size: 1rem;
     color: black;
-    width: 35%;
+    width: 30%;
     border-radius: 5px;
     border: none;
 
@@ -34,13 +34,10 @@ export const StyledInput = styled.input`
     }
 `;
 
-export const WatchButton = styled(StyledButton)`
-    margin-left: 1rem;
-`;
-
 export const RemoteContainer = styled.div`
-    width: 30%;
-    height: 50%;
+    width: 400px;
+    height: 600px;
     background-color: #111111;
     border-radius: 50px;
+    margin: 40px 0px;
 `;

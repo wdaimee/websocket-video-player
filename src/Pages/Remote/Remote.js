@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Title } from '../Home/Home.styles';
+import { StyledButton } from '../../components/Header/Header.styles';
 import { RemoteDiv, StyledInput, InputContainer, WatchButton, RemoteContainer } from './Remote.styles';
 
 const Remote = ({ socket, setUrl }) => {
@@ -45,11 +46,9 @@ const Remote = ({ socket, setUrl }) => {
                     name="urlInput"
                     onChange={handleChange}
                 />
-                <WatchButton onClick={handleSubmit}>Watch Video</WatchButton>
+                <StyledButton style={{marginRight: 0}}onClick={handleSubmit}>Watch Video</StyledButton>
             </InputContainer>
-            <Remote>
-
-            </Remote>
+            <RemoteContainer />
         </RemoteDiv>
     )
 }
