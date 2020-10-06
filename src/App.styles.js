@@ -5,6 +5,10 @@ export const AppDiv = styled.div`
     width: 100vw;
     height: 100vh;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: radial-gradient(rgba(0,0,0,0), rgba(0,0,0,0.7)),
     url(${Background}) no-repeat center center/cover;
     background-size: cover;
