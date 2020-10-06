@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import socketIOClient from 'socket.io-client';
+import { AppDiv } from './App.styles';
 const ENDPOINT = "http://localhost:3001";
 
 function App() {
@@ -17,16 +18,16 @@ function App() {
   // })
 
   return (
-    <div className="App">
+    <AppDiv>
       <Switch>
-        <Route exact path ='/' render={() => 
+        {/* <Route exact path ='/' render={() => 
           <HomePage />
         } />
         <Route exact path ='/remote' render={() => 
           <RemotePage />
-        } />
+        } /> */}
       </Switch>
-    </div>
+    </AppDiv>
 
   );
 }
