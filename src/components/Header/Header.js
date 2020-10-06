@@ -1,6 +1,7 @@
 import React from 'react';
 import { HeaderContainer, StyledImg, StyledButton } from './Header.styles';
 
+// Header component for logo and "grab a remote button"
 const Header = () => {
     return(
         <HeaderContainer>

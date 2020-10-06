@@ -7,7 +7,7 @@ const logger = require('morgan');
 const app = express();
 
 // Create server from app
-const server = http.createServer(app);
+var server = http.createServer(app);
 
 // require and attach io file to server
 const io = require('./io');

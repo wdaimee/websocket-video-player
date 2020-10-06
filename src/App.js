@@ -4,23 +4,32 @@ import socketIOClient from 'socket.io-client';
 import { AppDiv } from './App.styles';
 import Header from './components/Header/Header';
 import Home from './Pages/Home/Home';
+import Remote from './Pages/Remote/Remote';
+
 const ENDPOINT = "http://localhost:3001";
+const socket = socketIOClient(ENDPOINT);
 
 function App() {
-  // URL state for video that is playing
-  const [url, setUrl] = useState('https://www.youtube.com/watch?v=Zk4Gufx-O2k');
-  // URL state if video is playing or paused
-  const [playing, setPlaying] = useState(false);
+  // state for URL for video that is playing
+  const [url, setUrl] = useState('');
+  // state if video is playing or paused
+  const [playing, setPlaying] = useState();
+
 
   // useEffect(() => {
   //   const socket = socketIOClient(ENDPOINT);
+  //   // When client is connected to socket.io, console.log connected message
   //   socket.on("connect", data => {
-  //     console.log(data)
   //     console.log('connected to socket.io')
+  //   });
+  //   // update url when url change message recieved from backend
+  //   socket.on("url change", data => {
+  //     console.log(data);
+  //     setUrl(data.url);
   //   });
   //   // close socket connection on component dismount
   //   return () => socket.disconnect();
-  // })
+  // });
 
   return (
     <AppDiv>
@@ -28,13 +37,22 @@ function App() {
       <Switch>
         <Route exact path ='/' render={() => 
           <Home 
+            socket={socket}
             url={url}
             playing={playing}
+            setUrl={setUrl}
+            setPlaying={setPlaying}
           />
         } />
-        {/* <Route exact path ='/remote' render={() => 
-          <RemotePage />
-        } /> */}
+        <Route exact path ='/remote' render={() => 
+          <Remote 
+            socket={socket}
+            url={url}
+            playing={playing}
+            setUrl={setUrl}
+            setPlaying={setPlaying}
+          />
+        } />
       </Switch>
     </AppDiv>
 
