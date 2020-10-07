@@ -1,8 +1,21 @@
 import React from 'react';
-import { RemoteDiv, StyledImg, MiddleButton, Light } from './Remote.styles';
+import { RemoteDiv, 
+         StyledImg, 
+         MiddleButton, 
+         Light, 
+         VerticalButton,
+         VolumeButtonContainer,
+         HorizontalButton } from './Remote.styles';
 import { Icon } from '../../ui/Icon/Icon';
 
-export const Remote = ({ blink, handlePlayPause, playing }) => {
+export const Remote = 
+    ({ 
+       blink, 
+       handlePlayPause, 
+       playing,
+       handleVolumeUp,
+       handleVolumeDown 
+    }) => {
     return(
         <RemoteDiv>
             <StyledImg src="https://fontmeme.com/permalink/201007/11ecf2dbc6b00f5b001353ba4805f2bb.png" alt="netflix-font" border="0" />
@@ -14,6 +27,11 @@ export const Remote = ({ blink, handlePlayPause, playing }) => {
                     <Icon icon="playIcon" size="50px" color="white" />
                 }
             </MiddleButton>
+            <VolumeButtonContainer>
+                <VerticalButton onClick={handleVolumeUp}>Volume Up</VerticalButton>
+                <HorizontalButton>Mute</HorizontalButton>
+                <VerticalButton onClick={handleVolumeDown}>Volume Down</VerticalButton>
+            </VolumeButtonContainer>
         </RemoteDiv>
     )
 }

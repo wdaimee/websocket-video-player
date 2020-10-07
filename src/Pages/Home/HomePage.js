@@ -15,8 +15,8 @@ const HomePage = ({ socket, url, playing, setUrl, setPlaying, volume, setVolume 
             setPlaying(data.playing);
             setVolume(data.volume);
         });
-        /* When url is update by remote, receive the url from backend and 
-           update local state for url */
+        /* when client connects to socket, receive default state from 
+           backend */
         socket.on("url changed", data => {
             setUrl(data);
         });
@@ -24,6 +24,16 @@ const HomePage = ({ socket, url, playing, setUrl, setPlaying, volume, setVolume 
            toggle the boolean value of playing state*/
         socket.on("play", () => {
             setPlaying(!playing);
+        });
+        /* When the volume up message is received, update 
+           the volume state with info from backend */
+           socket.on("volume-up", volume => {
+            setVolume(volume);
+        });
+        /* When the volume down message is received, update 
+           the volume state with info from backend */
+           socket.on("volume-down", volume => {
+            setVolume(volume);
         });
     });
 
@@ -35,6 +45,7 @@ const HomePage = ({ socket, url, playing, setUrl, setPlaying, volume, setVolume 
                          playing={playing}
                          width="961px"
                          height="601px"
+                         volume={volume}
             />
             <div style={{color: 'white'}}>Volume: {volume}</div>
         </>

@@ -22,6 +22,20 @@ io.on("connection", function(socket) {
         state.playing = !state.playing;
         socket.broadcast.emit('play');
     });
+    // When the volume up button is pressed, increase the volume
+    socket.on('volume-up', () => {
+        // use .toFixed to force to 1 decimal place and convert back to float from string
+        state.volume >= 1 ? state.volume = 1 : state.volume = parseFloat((state.volume += 0.1).toFixed(1));
+        console.log(state.volume);
+        socket.broadcast.emit('volume-up', state.volume);
+    });
+    // When the volume down button is pressed, decrease the volume
+    socket.on('volume-down', () => {
+        // use .toFixed to force to 1 decimal place and convert back to float from string
+        state.volume <= 0 ? state.volume = 0 : state.volume = parseFloat((state.volume -= 0.1).toFixed(1));
+        console.log(state.volume)
+        socket.broadcast.emit('volume-down', state.volume);
+    });
     socket.on("disconnect", () => {
         console.log("disconnected");
     });

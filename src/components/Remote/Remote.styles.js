@@ -34,15 +34,14 @@ export const Light = styled.div`
     background-color: ${({ blink }) => blink === false ? '#8b0000' : '#DB202C'};
 `;
 
-export const MiddleButton = styled.button`
-    border-radius: 50%;
-    height: 9.375rem;
-    width: 9.375rem;
+// Default styling for remote buttons
+export const DefaultRemoteButton = styled.button`
     background-color: #DB202C;
-    position: absolute;
-    top: calc(50% - 75px);
     border: none;
     box-shadow: 0 0.3125rem #999;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
     cursor: pointer;
 
     &:hover {
@@ -57,4 +56,37 @@ export const MiddleButton = styled.button`
     &:focus {
         outline: none;
     }
+`;
+
+// Styling for play/pause button
+export const MiddleButton = styled(DefaultRemoteButton)`
+    border-radius: 50%;
+    height: 9.375rem;
+    width: 9.375rem;
+    position: absolute;
+    top: calc(50% - 75px);
+`;
+
+export const VolumeButtonContainer = styled.div`
+    width: 100%;
+    position: absolute;
+    bottom: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+`;
+
+// styling for vertical buttons
+export const VerticalButton = styled(DefaultRemoteButton)`
+    border-radius: 5px;
+    height: 9.375rem;
+    width: 75px;
+`;
+
+// styling for horizontal button
+export const HorizontalButton = styled(DefaultRemoteButton)`
+    border-radius: 5px;
+    width: 9.375rem;
+    height: 75px;
 `;

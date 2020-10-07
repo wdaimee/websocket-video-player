@@ -13,9 +13,9 @@ function App() {
   // state for URL for video that is playing
   const [url, setUrl] = useState('');
   // state if video is playing or paused
-  const [playing, setPlaying] = useState();
+  const [playing, setPlaying] = useState(false);
   // state for volume of video
-  const [volume, setVolume] = useState();
+  const [volume, setVolume] = useState(0.8);
 
 
   // useEffect(() => {

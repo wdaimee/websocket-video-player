@@ -40,10 +40,24 @@ const RemotePage = ({ socket, setUrl, setPlaying, playing, volume, setVolume }) 
         BlinkLight();
     }
 
+    const handleVolumeUp = () => {
+        // use .toFixed to force to 1 decimal place and convert back to float from string
+        volume >= 1 ? setVolume(1) : setVolume(parseFloat((volume += 0.1).toFixed(1)));
+        socket.emit('volume-up');
+        BlinkLight();
+    }
+
+    const handleVolumeDown = () => {
+        // use .toFixed to force to 1 decimal place and convert back to float from string
+        volume <= 0 ? setVolume(0) : setVolume(parseFloat((volume -= 0.1).toFixed(1)));
+        socket.emit('volume-down');
+        BlinkLight();
+    }
+
    // method for socket.io connections
    useEffect(() => {
-        /* when client connects to socket, receive video url and update
-        state of url */
+        /* when client connects to socket, receive default state from 
+           backend */
         socket.on("connected", data => {
             setUrl(data.url);
             setPlaying(data.playing);
@@ -59,6 +73,16 @@ const RemotePage = ({ socket, setUrl, setPlaying, playing, volume, setVolume }) 
         socket.on("play", () => {
             setPlaying(!playing);
         });
+        /* When the volume up message is received, update 
+           the volume state with info from backend */
+        socket.on("volume-up", volume => {
+            setVolume(volume);
+        });
+        /* When the volume down message is received, update 
+           the volume state with info from backend */
+           socket.on("volume-down", volume => {
+            setVolume(volume);
+        });
     });
 
     return(
@@ -73,7 +97,13 @@ const RemotePage = ({ socket, setUrl, setPlaying, playing, volume, setVolume }) 
                 />
                 <StyledButton style={{marginRight: 0}}onClick={handleSubmit}>Watch Video</StyledButton>
             </InputContainer>
-            <Remote blink={blink} playing={playing} handlePlayPause={handlePlayPause} />
+            <Remote 
+                blink={blink} 
+                playing={playing} 
+                handlePlayPause={handlePlayPause} 
+                handleVolumeUp={handleVolumeUp}
+                handleVolumeDown={handleVolumeDown}
+            />
         </RemoteDiv>
     )
 }
