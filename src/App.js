@@ -14,6 +14,8 @@ function App() {
   const [url, setUrl] = useState('');
   // state if video is playing or paused
   const [playing, setPlaying] = useState();
+  // state for volume of video
+  const [volume, setVolume] = useState();
 
 
   // useEffect(() => {
@@ -42,6 +44,8 @@ function App() {
             playing={playing}
             setUrl={setUrl}
             setPlaying={setPlaying}
+            volume={volume}
+            setVolume={setVolume}
           />
         } />
         <Route exact path ='/remote' render={() => 
@@ -51,6 +55,8 @@ function App() {
             playing={playing}
             setUrl={setUrl}
             setPlaying={setPlaying}
+            volume={volume}
+            setVolume={setVolume}
           />
         } />
       </Switch>

@@ -3,7 +3,7 @@ import ReactPlayer from 'react-player';
 import { Title } from './HomePage.styles';
 
 // Home Page content with Title and Video Player
-const HomePage = ({ socket, url, playing, setUrl, setPlaying }) => {
+const HomePage = ({ socket, url, playing, setUrl, setPlaying, volume, setVolume }) => {
 
     // method for socket.io connections
     useEffect(() => {
@@ -13,6 +13,7 @@ const HomePage = ({ socket, url, playing, setUrl, setPlaying }) => {
             console.log(data);
             setUrl(data.url);
             setPlaying(data.playing);
+            setVolume(data.volume);
         });
         /* When url is update by remote, receive the url from backend and 
            update local state for url */
@@ -35,6 +36,7 @@ const HomePage = ({ socket, url, playing, setUrl, setPlaying }) => {
                          width="961px"
                          height="601px"
             />
+            <div style={{color: 'white'}}>Volume: {volume}</div>
         </>
     )
 }

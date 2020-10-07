@@ -3,7 +3,8 @@ const io = require('socket.io')();
 // initial state of app
 const state = {
     url: 'https://www.youtube.com/watch?v=Zk4Gufx-O2k',
-    playing: false
+    playing: false,
+    volume: 0.8
 }
 
 io.on("connection", function(socket) {

@@ -3,14 +3,10 @@ import { Title } from '../Home/HomePage.styles';
 import { StyledButton } from '../../components/Header/Header.styles';
 import { RemoteDiv, 
          StyledInput, 
-         InputContainer, 
-         Remote, 
-         StyledImg, 
-         MiddleButton,
-         Light } from './RemotePage.styles';
-import { Icon } from '../../ui/Icon/Icon';
+         InputContainer } from './RemotePage.styles';
+import Remote from '../../components/Remote/Remote';
 
-const RemotePage = ({ socket, setUrl, setPlaying, playing }) => {
+const RemotePage = ({ socket, setUrl, setPlaying, playing, volume, setVolume }) => {
     // state for url Input
     const [urlInput, setUrlInput] = useState('');
     // state for blinking light
@@ -49,9 +45,9 @@ const RemotePage = ({ socket, setUrl, setPlaying, playing }) => {
         /* when client connects to socket, receive video url and update
         state of url */
         socket.on("connected", data => {
-            console.log(data);
             setUrl(data.url);
             setPlaying(data.playing);
+            setVolume(data.volume);
         });
         /* When url is update by remote, receive the url from backend and 
         update local state for url */
@@ -77,17 +73,7 @@ const RemotePage = ({ socket, setUrl, setPlaying, playing }) => {
                 />
                 <StyledButton style={{marginRight: 0}}onClick={handleSubmit}>Watch Video</StyledButton>
             </InputContainer>
-            <Remote>
-                <StyledImg src="https://fontmeme.com/permalink/201007/11ecf2dbc6b00f5b001353ba4805f2bb.png" alt="netflix-font" border="0" />
-                <Light blink={blink} />
-                <MiddleButton onClick={handlePlayPause}>
-                    { playing === true ? 
-                        <Icon icon="pauseIcon" size="50px" color="white" />
-                            :
-                        <Icon icon="playIcon" size="50px" color="white" />
-                    }
-                </MiddleButton>
-            </Remote>
+            <Remote blink={blink} playing={playing} handlePlayPause={handlePlayPause} />
         </RemoteDiv>
     )
 }
