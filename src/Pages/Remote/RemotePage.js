@@ -8,6 +8,7 @@ import { RemoteDiv,
          StyledImg, 
          MiddleButton,
          Light } from './RemotePage.styles';
+import { Icon } from '../../ui/Icon/Icon';
 
 const RemotePage = ({ socket, setUrl, setPlaying, playing }) => {
     // state for url Input
@@ -80,7 +81,11 @@ const RemotePage = ({ socket, setUrl, setPlaying, playing }) => {
                 <StyledImg src="https://fontmeme.com/permalink/201007/11ecf2dbc6b00f5b001353ba4805f2bb.png" alt="netflix-font" border="0" />
                 <Light blink={blink} />
                 <MiddleButton onClick={handlePlayPause}>
-                    { playing === true ? 'Pause':'Play' }
+                    { playing === true ? 
+                        <Icon icon="pauseIcon" size="50px" color="white" />
+                            :
+                        <Icon icon="playIcon" size="50px" color="white" />
+                    }
                 </MiddleButton>
             </Remote>
         </RemoteDiv>

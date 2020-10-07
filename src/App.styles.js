@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Background from './images/bg.jpg';
+import Background from './ui/images/bg.jpg';
 
 export const AppDiv = styled.div`
     width: 100vw;

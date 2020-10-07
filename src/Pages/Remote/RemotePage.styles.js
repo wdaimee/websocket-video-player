@@ -41,10 +41,12 @@ export const Remote = styled.div`
     height: 37.5rem;
     background-color: #111111;
     border-radius: 3.125rem;
+    border: 0.125rem solid black;
     margin: 2.5rem 0rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0.3125rem 0.3125rem 0.625rem black;
 `;
 
 // Styling for 'The Remote' image
