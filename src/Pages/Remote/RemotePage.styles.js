@@ -36,6 +36,7 @@ export const StyledInput = styled.input`
 
 // Styling for the remote control that will be displayed on remote page
 export const Remote = styled.div`
+    position: relative;
     width: 25rem;
     height: 37.5rem;
     background-color: #111111;
@@ -54,15 +55,26 @@ export const StyledImg = styled.img`
     top: 0;
 `;
 
+// Styling for blinking button
+export const Light = styled.div`
+    position: absolute;
+    top: 2rem;
+    right: 1.5rem;
+    height: 1.25rem;
+    width: 1.25rem;
+    border-radius: 50%;
+    background-color: ${({ blink }) => blink === false ? '#8b0000' : '#DB202C'};
+`;
+
 export const MiddleButton = styled.button`
     border-radius: 50%;
-    height: 150px;
-    width: 150px;
+    height: 9.375rem;
+    width: 9.375rem;
     background-color: #DB202C;
     position: absolute;
-    top: 50%;
+    top: calc(50% - 75px);
     border: none;
-    box-shadow: 0 5px #999;
+    box-shadow: 0 0.3125rem #999;
     cursor: pointer;
 
     &:hover {
@@ -70,8 +82,8 @@ export const MiddleButton = styled.button`
     }
 
     &:active {
-        box-shadow: 0 2px #999;
-        transform: translateY(5px);
+        box-shadow: 0 0.125rem #999;
+        transform: translateY(0.3125rem);
     }
 
     &:focus {
