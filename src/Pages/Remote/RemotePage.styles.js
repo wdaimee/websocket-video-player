@@ -41,4 +41,40 @@ export const Remote = styled.div`
     background-color: #111111;
     border-radius: 3.125rem;
     margin: 2.5rem 0rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+// Styling for 'The Remote' image
+export const StyledImg = styled.img`
+    margin-top: 0.625rem;
+    width: 15rem;
+    height: 4rem;
+    top: 0;
+`;
+
+export const MiddleButton = styled.button`
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    background-color: #DB202C;
+    position: absolute;
+    top: 50%;
+    border: none;
+    box-shadow: 0 5px #999;
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(1.1);
+    }
+
+    &:active {
+        box-shadow: 0 2px #999;
+        transform: translateY(5px);
+    }
+
+    &:focus {
+        outline: none;
+    }
 `;

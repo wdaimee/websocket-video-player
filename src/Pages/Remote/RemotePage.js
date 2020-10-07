@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Title } from '../Home/HomePage.styles';
 import { StyledButton } from '../../components/Header/Header.styles';
-import { RemoteDiv, StyledInput, InputContainer, Remote } from './RemotePage.styles';
+import { RemoteDiv, StyledInput, InputContainer, Remote, StyledImg, MiddleButton } from './RemotePage.styles';
 
-const RemotePage = ({ socket, setUrl }) => {
+const RemotePage = ({ socket, setUrl, setPlaying, playing }) => {
     // state for url Input
     const [urlInput, setUrlInput] = useState('');
 
@@ -20,6 +20,12 @@ const RemotePage = ({ socket, setUrl }) => {
         });
     };
 
+    // Function to handle play/pause button click
+    const handlePlayPause = () => {
+        setPlaying(!playing);
+        socket.emit('play')
+    }
+
    // method for socket.io connections
    useEffect(() => {
         /* when client connects to socket, receive video url and update
@@ -33,6 +39,11 @@ const RemotePage = ({ socket, setUrl }) => {
         update local state for url */
         socket.on("url changed", data => {
             setUrl(data);
+        });
+        /* When the play/pause button is pressed, 
+           toggle the boolean value of playing state*/
+        socket.on("play", () => {
+            setPlaying(!playing);
         });
     });
 
@@ -48,7 +59,12 @@ const RemotePage = ({ socket, setUrl }) => {
                 />
                 <StyledButton style={{marginRight: 0}}onClick={handleSubmit}>Watch Video</StyledButton>
             </InputContainer>
-            <Remote />
+            <Remote>
+                <StyledImg src="https://fontmeme.com/permalink/201007/11ecf2dbc6b00f5b001353ba4805f2bb.png" alt="netflix-font" border="0" />
+                <MiddleButton onClick={handlePlayPause}>
+                    { playing === true ? 'Pause':'Play' }
+                </MiddleButton>
+            </Remote>
         </RemoteDiv>
     )
 }

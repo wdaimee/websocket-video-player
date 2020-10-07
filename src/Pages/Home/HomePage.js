@@ -5,8 +5,6 @@ import { Title } from './HomePage.styles';
 // Home Page content with Title and Video Player
 const HomePage = ({ socket, url, playing, setUrl, setPlaying }) => {
 
-    // https://www.youtube.com/watch?v=HRdLNFl4-mU
-
     // method for socket.io connections
     useEffect(() => {
         /* when client connects to socket, receive video url and update
@@ -14,12 +12,17 @@ const HomePage = ({ socket, url, playing, setUrl, setPlaying }) => {
         socket.on("connected", data => {
             console.log(data);
             setUrl(data.url);
-            // setPlaying(data.playing);
+            setPlaying(data.playing);
         });
         /* When url is update by remote, receive the url from backend and 
            update local state for url */
         socket.on("url changed", data => {
             setUrl(data);
+        });
+        /* When the play/pause button is pressed, 
+           toggle the boolean value of playing state*/
+        socket.on("play", () => {
+            setPlaying(!playing);
         });
     });
 

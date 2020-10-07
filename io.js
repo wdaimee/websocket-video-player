@@ -3,7 +3,7 @@ const io = require('socket.io')();
 // initial state of app
 const state = {
     url: 'https://www.youtube.com/watch?v=Zk4Gufx-O2k',
-    playing: true
+    playing: false
 }
 
 io.on("connection", function(socket) {
@@ -15,6 +15,11 @@ io.on("connection", function(socket) {
     socket.on('url change', data => {
         state.url = data.url
         socket.broadcast.emit('url changed', state.url)
+    });
+    // When play/pause button is pressed, toggle playing state boolean value
+    socket.on('play', () => {
+        state.playing = !state.playing;
+        socket.broadcast.emit('play');
     });
     socket.on("disconnect", () => {
         console.log("disconnected");
