@@ -6,7 +6,17 @@ import { RemoteDiv,
          InputContainer } from './RemotePage.styles';
 import Remote from '../../components/Remote/Remote';
 
-const RemotePage = ({ socket, setUrl, setPlaying, playing, volume, setVolume }) => {
+const RemotePage = 
+    ({ 
+        socket, 
+        setUrl, 
+        setPlaying, 
+        playing, 
+        volume, 
+        setVolume,
+        mute,
+        setMute 
+    }) => {
     // state for url Input
     const [urlInput, setUrlInput] = useState('');
     // state for blinking light
@@ -40,6 +50,7 @@ const RemotePage = ({ socket, setUrl, setPlaying, playing, volume, setVolume }) 
         BlinkLight();
     }
 
+    // Function to handle volume up button press
     const handleVolumeUp = () => {
         // use .toFixed to force to 1 decimal place and convert back to float from string
         volume >= 1 ? setVolume(1) : setVolume(parseFloat((volume += 0.1).toFixed(1)));
@@ -47,10 +58,17 @@ const RemotePage = ({ socket, setUrl, setPlaying, playing, volume, setVolume }) 
         BlinkLight();
     }
 
+    // Function to handle volume down button press
     const handleVolumeDown = () => {
         // use .toFixed to force to 1 decimal place and convert back to float from string
         volume <= 0 ? setVolume(0) : setVolume(parseFloat((volume -= 0.1).toFixed(1)));
         socket.emit('volume-down');
+        BlinkLight();
+    }
+
+    const handleMute = () => {
+        setMute(!mute);
+        socket.emit('mute');
         BlinkLight();
     }
 
@@ -80,8 +98,12 @@ const RemotePage = ({ socket, setUrl, setPlaying, playing, volume, setVolume }) 
         });
         /* When the volume down message is received, update 
            the volume state with info from backend */
-           socket.on("volume-down", volume => {
+        socket.on("volume-down", volume => {
             setVolume(volume);
+        });
+        /* When the mute button is pressed, update the mute state */
+        socket.on("mute", () => {
+            setMute(!mute);
         });
     });
 
@@ -103,6 +125,8 @@ const RemotePage = ({ socket, setUrl, setPlaying, playing, volume, setVolume }) 
                 handlePlayPause={handlePlayPause} 
                 handleVolumeUp={handleVolumeUp}
                 handleVolumeDown={handleVolumeDown}
+                handleMute={handleMute}
+                mute={mute}
             />
         </RemoteDiv>
     )

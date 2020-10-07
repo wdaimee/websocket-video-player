@@ -16,6 +16,8 @@ function App() {
   const [playing, setPlaying] = useState(false);
   // state for volume of video
   const [volume, setVolume] = useState(0.8);
+  // state of mute for video
+  const [mute, setMute] = useState(false);
 
 
   // useEffect(() => {
@@ -46,6 +48,8 @@ function App() {
             setPlaying={setPlaying}
             volume={volume}
             setVolume={setVolume}
+            mute={mute}
+            setMute={setMute}
           />
         } />
         <Route exact path ='/remote' render={() => 
@@ -57,6 +61,8 @@ function App() {
             setPlaying={setPlaying}
             volume={volume}
             setVolume={setVolume}
+            mute={mute}
+            setMute={setMute}
           />
         } />
       </Switch>

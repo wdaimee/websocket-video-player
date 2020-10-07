@@ -3,7 +3,18 @@ import ReactPlayer from 'react-player';
 import { Title } from './HomePage.styles';
 
 // Home Page content with Title and Video Player
-const HomePage = ({ socket, url, playing, setUrl, setPlaying, volume, setVolume }) => {
+const HomePage = 
+    ({ 
+        socket, 
+        url, 
+        playing, 
+        setUrl, 
+        setPlaying, 
+        volume, 
+        setVolume,
+        mute,
+        setMute 
+    }) => {
 
     // method for socket.io connections
     useEffect(() => {
@@ -35,6 +46,10 @@ const HomePage = ({ socket, url, playing, setUrl, setPlaying, volume, setVolume 
            socket.on("volume-down", volume => {
             setVolume(volume);
         });
+        /* When the mute button is pressed, update the mute state */
+        socket.on("mute", () => {
+            setMute(!mute);
+        });
     });
 
     return(
@@ -46,8 +61,10 @@ const HomePage = ({ socket, url, playing, setUrl, setPlaying, volume, setVolume 
                          width="961px"
                          height="601px"
                          volume={volume}
+                         muted={mute}
             />
             <div style={{color: 'white'}}>Volume: {volume}</div>
+            { mute ? <div style={{color: 'white'}}> Muted </div> : null }
         </>
     )
 }

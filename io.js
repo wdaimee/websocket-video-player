@@ -4,7 +4,8 @@ const io = require('socket.io')();
 const state = {
     url: 'https://www.youtube.com/watch?v=Zk4Gufx-O2k',
     playing: false,
-    volume: 0.8
+    volume: 0.8,
+    mute: false
 }
 
 io.on("connection", function(socket) {
@@ -35,6 +36,11 @@ io.on("connection", function(socket) {
         state.volume <= 0 ? state.volume = 0 : state.volume = parseFloat((state.volume -= 0.1).toFixed(1));
         console.log(state.volume)
         socket.broadcast.emit('volume-down', state.volume);
+    });
+    // When mute button is pressed, toggle mute state boolean value
+    socket.on('mute', () => {
+        state.mute = !state.mute;
+        socket.broadcast.emit('mute');
     });
     socket.on("disconnect", () => {
         console.log("disconnected");

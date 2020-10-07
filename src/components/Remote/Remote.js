@@ -14,7 +14,9 @@ export const Remote =
        handlePlayPause, 
        playing,
        handleVolumeUp,
-       handleVolumeDown 
+       handleVolumeDown,
+       handleMute,
+       mute 
     }) => {
     return(
         <RemoteDiv>
@@ -29,7 +31,9 @@ export const Remote =
             </MiddleButton>
             <VolumeButtonContainer>
                 <VerticalButton onClick={handleVolumeUp}>Volume Up</VerticalButton>
-                <HorizontalButton>Mute</HorizontalButton>
+                <HorizontalButton onClick={handleMute}>
+                    { mute ? 'Unmute' : 'Mute'}
+                </HorizontalButton>
                 <VerticalButton onClick={handleVolumeDown}>Volume Down</VerticalButton>
             </VolumeButtonContainer>
         </RemoteDiv>
