@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import socketIOClient from 'socket.io-client';
 import { AppDiv } from './App.styles';
@@ -18,22 +18,12 @@ function App() {
   const [volume, setVolume] = useState(0.8);
   // state of mute for video
   const [mute, setMute] = useState(false);
-
-
-  // useEffect(() => {
-  //   const socket = socketIOClient(ENDPOINT);
-  //   // When client is connected to socket.io, console.log connected message
-  //   socket.on("connect", data => {
-  //     console.log('connected to socket.io')
-  //   });
-  //   // update url when url change message recieved from backend
-  //   socket.on("url change", data => {
-  //     console.log(data);
-  //     setUrl(data.url);
-  //   });
-  //   // close socket connection on component dismount
-  //   return () => socket.disconnect();
-  // });
+  // state for playback rate of video
+  const [playBackRate, setPlayBackRate] = useState(1);
+  // state for setting video time for rewind/forward
+  const [played, setPlayed] = useState(0);
+  // state for current video time played so far
+  const [currentTime, setCurrentTime] = useState(0);
 
   return (
     <AppDiv>
@@ -50,6 +40,12 @@ function App() {
             setVolume={setVolume}
             mute={mute}
             setMute={setMute}
+            playBackRate={playBackRate}
+            setPlayBackRate={setPlayBackRate}
+            played={played}
+            setPlayed={setPlayed}
+            currentTime={currentTime}
+            setCurrentTime={setCurrentTime}
           />
         } />
         <Route exact path ='/remote' render={() => 
@@ -63,6 +59,12 @@ function App() {
             setVolume={setVolume}
             mute={mute}
             setMute={setMute}
+            playBackRate={playBackRate}
+            setPlayBackRate={setPlayBackRate}
+            played={played}
+            setPlayed={setPlayed}
+            currentTime={currentTime}
+            setCurrentTime={setCurrentTime}
           />
         } />
       </Switch>

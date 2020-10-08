@@ -15,7 +15,13 @@ const RemotePage =
         volume, 
         setVolume,
         mute,
-        setMute 
+        setMute,
+        playBackRate,
+        setPlayBackRate,
+        played,
+        setPlayed,
+        currentTime,
+        setCurrentTime,
     }) => {
     // state for url Input
     const [urlInput, setUrlInput] = useState('');
@@ -38,6 +44,8 @@ const RemotePage =
     // Function to submit url via websockets
     const handleSubmit = () => {
         setUrl(urlInput);
+        // clear the url input when submit button pressed
+        setUrlInput('');
         socket.emit('url change', {
             url: urlInput
         });
@@ -66,20 +74,31 @@ const RemotePage =
         BlinkLight();
     }
 
+    // Function to handle mute button press
     const handleMute = () => {
         setMute(!mute);
         socket.emit('mute');
         BlinkLight();
     }
 
-   // method for socket.io connections
-   useEffect(() => {
+    // Functin to handle fast forward button press
+    const handleFastForward = () => {
+        setPlayBackRate(playBackRate + 0.2);
+        socket.emit('fast-forward');
+        BlinkLight();
+    }
+
+    // method for socket.io connections
+    useEffect(() => {
         /* when client connects to socket, receive default state from 
            backend */
         socket.on("connected", data => {
             setUrl(data.url);
             setPlaying(data.playing);
             setVolume(data.volume);
+            setPlayBackRate(data.playBackRate);
+            setCurrentTime(data.currentTime);
+            setPlayed(data.currentTime);
         });
         /* When url is update by remote, receive the url from backend and 
         update local state for url */
@@ -93,17 +112,26 @@ const RemotePage =
         });
         /* When the volume up message is received, update 
            the volume state with info from backend */
-        socket.on("volume-up", volume => {
-            setVolume(volume);
+        socket.on("volume-up", volumeReceived => {
+            setVolume(volumeReceived);
         });
         /* When the volume down message is received, update 
            the volume state with info from backend */
-        socket.on("volume-down", volume => {
-            setVolume(volume);
+        socket.on("volume-down", volumeReceived => {
+            setVolume(volumeReceived);
         });
         /* When the mute button is pressed, update the mute state */
         socket.on("mute", () => {
             setMute(!mute);
+        });
+        /* When the fastforward button is pressed, update the playBackRate state */
+        socket.on("fast-forward", playBackRateReceived => {
+            setPlayBackRate(playBackRateReceived);
+        });
+       /* When the current time is sent to frontend every second, update the 
+           currentTime state every second on client while video is playing */
+        socket.on("current-time", currentTimeReceived => {
+            setCurrentTime(currentTimeReceived);
         });
     });
 
@@ -127,6 +155,7 @@ const RemotePage =
                 handleVolumeDown={handleVolumeDown}
                 handleMute={handleMute}
                 mute={mute}
+                handleFastForward={handleFastForward}
             />
         </RemoteDiv>
     )

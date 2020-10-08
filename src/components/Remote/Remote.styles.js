@@ -67,6 +67,7 @@ export const MiddleButton = styled(DefaultRemoteButton)`
     top: calc(50% - 75px);
 `;
 
+// styling for volume button container
 export const VolumeButtonContainer = styled.div`
     width: 100%;
     position: absolute;
@@ -89,4 +90,15 @@ export const HorizontalButton = styled(DefaultRemoteButton)`
     border-radius: 5px;
     width: 9.375rem;
     height: 75px;
+`;
+
+// styling for seek button container
+export const SeekButtonContainer = styled.div`
+    position: relative;
+    top: 5%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 `;

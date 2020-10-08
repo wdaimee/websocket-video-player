@@ -5,7 +5,9 @@ const state = {
     url: 'https://www.youtube.com/watch?v=Zk4Gufx-O2k',
     playing: false,
     volume: 0.8,
-    mute: false
+    mute: false,
+    playBackRate: 1,
+    currentTime: 0
 }
 
 io.on("connection", function(socket) {
@@ -41,6 +43,16 @@ io.on("connection", function(socket) {
     socket.on('mute', () => {
         state.mute = !state.mute;
         socket.broadcast.emit('mute');
+    });
+    // When the fast forward button is pressed, increase the playback rate
+    socket.on('fast-forward', () => {
+        state.playBackRate = state.playBackRate + 0.2;
+        socket.broadcast.emit('fast-forward', state.playBackRate);
+    });
+    // When the played timer is sent back to database, set state object to played timer and emit to clients
+    socket.on('current-time', currentTime => {
+        state.currentTime = currentTime;
+        socket.broadcast.emit('current-time', state.currentTime);
     });
     socket.on("disconnect", () => {
         console.log("disconnected");

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { Title } from './HomePage.styles';
 
@@ -13,18 +13,44 @@ const HomePage =
         volume, 
         setVolume,
         mute,
-        setMute 
+        setMute,
+        playBackRate,
+        setPlayBackRate,
+        played,
+        setPlayed,
+        currentTime,
+        setCurrentTime,
     }) => {
+    
+    // ref for video player
+    const videoRef = React.createRef();
+    
+    // video timer id to capture id of setInterval
+    const timerRef = React.useRef(null);
+    
+    /* While video is playing and videoRef exists, send amount of 
+       time video has played to backend every second */
+    useEffect(() => {
+        if (videoRef && playing) {
+            timerRef.current = setInterval(() => {
+                socket.emit('current-time', videoRef.current.getCurrentTime());
+            }, 1000)
+        } else if (!playing && timerRef.current) {
+            clearInterval(timerRef.current)
+        }
+    }, [playing, videoRef])
 
     // method for socket.io connections
     useEffect(() => {
         /* when client connects to socket, receive video url and update
            state of url */
         socket.on("connected", data => {
-            console.log(data);
             setUrl(data.url);
             setPlaying(data.playing);
             setVolume(data.volume);
+            setPlayBackRate(data.playBackRate);
+            setCurrentTime(data.currentTime);
+            setPlayed(data.currentTime);
         });
         /* when client connects to socket, receive default state from 
            backend */
@@ -32,23 +58,32 @@ const HomePage =
             setUrl(data);
         });
         /* When the play/pause button is pressed, 
-           toggle the boolean value of playing state*/
+           toggle the boolean value of playing state */
         socket.on("play", () => {
             setPlaying(!playing);
         });
-        /* When the volume up message is received, update 
+         /* When the volume up message is received, update 
            the volume state with info from backend */
-           socket.on("volume-up", volume => {
-            setVolume(volume);
+           socket.on("volume-up", volumeReceived => {
+            setVolume(volumeReceived);
         });
         /* When the volume down message is received, update 
            the volume state with info from backend */
-           socket.on("volume-down", volume => {
-            setVolume(volume);
+        socket.on("volume-down", volumeReceived => {
+            setVolume(volumeReceived);
         });
         /* When the mute button is pressed, update the mute state */
         socket.on("mute", () => {
             setMute(!mute);
+        });
+        /* When the fastforward button is pressed, update the playBackRate state */
+        socket.on("fast-forward", playBackRateReceived => {
+            setPlayBackRate(playBackRateReceived);
+        });
+        /* When the current time is sent to frontend every second, update the 
+           currentTime state every second on client while video is playing */
+        socket.on("current-time", currentTimeReceived => {
+            setCurrentTime(currentTimeReceived);
         });
     });
 
@@ -62,9 +97,15 @@ const HomePage =
                          height="601px"
                          volume={volume}
                          muted={mute}
+                         playbackRate={playBackRate}
+                         ref={videoRef}
             />
-            <div style={{color: 'white'}}>Volume: {volume}</div>
-            { mute ? <div style={{color: 'white'}}> Muted </div> : null }
+            <div style={{color: 'white'}}>
+                Volume: {volume}
+            </div>
+            <div style={{color: 'white'}}>
+                Muted: { mute ? 'True' : 'False'}
+            </div>
         </>
     )
 }
