@@ -7,7 +7,8 @@ const state = {
     volume: 0.8,
     mute: false,
     playBackRate: 1,
-    currentTime: 0
+    currentTime: 0,
+    seekTo: 0
 }
 
 io.on("connection", function(socket) {
@@ -44,10 +45,17 @@ io.on("connection", function(socket) {
         state.mute = !state.mute;
         socket.broadcast.emit('mute');
     });
-    // When the fast forward button is pressed, increase the playback rate
-    socket.on('fast-forward', () => {
-        state.playBackRate = state.playBackRate + 0.2;
-        socket.broadcast.emit('fast-forward', state.playBackRate);
+    /* When the fast forward button is pressed, add 10 seconds to the current time
+       and send back as seekTo */
+    socket.on('forward', () => {
+        state.seekTo = state.currentTime + 10;
+        socket.broadcast.emit('forward', state.seekTo);
+    });
+    /* When the rewind button is pressed, subtract 10 seconds to the current time 
+       if the new seekTo time is 0 or less, set seekTo time to 0 */
+    socket.on('rewind', () => {
+        (state.currentTime - 10) <= 0 ? state.seekTo = 0 : state.seekTo = state.currentTime - 10;
+        socket.broadcast.emit('rewind', state.seekTo);
     });
     // When the played timer is sent back to database, set state object to played timer and emit to clients
     socket.on('current-time', currentTime => {

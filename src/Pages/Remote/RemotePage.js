@@ -18,8 +18,8 @@ const RemotePage =
         setMute,
         playBackRate,
         setPlayBackRate,
-        played,
-        setPlayed,
+        seekTo,
+        setSeekTo,
         currentTime,
         setCurrentTime,
     }) => {
@@ -81,10 +81,17 @@ const RemotePage =
         BlinkLight();
     }
 
-    // Functin to handle fast forward button press
-    const handleFastForward = () => {
-        setPlayBackRate(playBackRate + 0.2);
-        socket.emit('fast-forward');
+    // Functin to handle forward button, skip 10s ahead in video
+    const handleForward = () => {
+        setSeekTo(currentTime + 10);
+        socket.emit('forward');
+        BlinkLight();
+    }
+
+    // Function to handle rewind button, rewind 10s back in video
+    const handleRewind = () => {
+        (currentTime - 10) <= 0 ? setSeekTo(0) : setSeekTo(currentTime - 10);
+        socket.emit('rewind');
         BlinkLight();
     }
 
@@ -98,7 +105,6 @@ const RemotePage =
             setVolume(data.volume);
             setPlayBackRate(data.playBackRate);
             setCurrentTime(data.currentTime);
-            setPlayed(data.currentTime);
         });
         /* When url is update by remote, receive the url from backend and 
         update local state for url */
@@ -124,9 +130,13 @@ const RemotePage =
         socket.on("mute", () => {
             setMute(!mute);
         });
-        /* When the fastforward button is pressed, update the playBackRate state */
-        socket.on("fast-forward", playBackRateReceived => {
-            setPlayBackRate(playBackRateReceived);
+        /* When the forward button is pressed, update the seekTo state */
+        socket.on("forward", seekToReceived => {
+            setSeekTo(seekToReceived);
+        });
+        /* When the rewind button is pressed, update the seekTo state */
+        socket.on("rewind", seekToReceived => {
+            setSeekTo(seekToReceived);
         });
        /* When the current time is sent to frontend every second, update the 
            currentTime state every second on client while video is playing */
@@ -155,7 +165,8 @@ const RemotePage =
                 handleVolumeDown={handleVolumeDown}
                 handleMute={handleMute}
                 mute={mute}
-                handleFastForward={handleFastForward}
+                handleForward={handleForward}
+                handleRewind={handleRewind}
             />
         </RemoteDiv>
     )

@@ -18,7 +18,8 @@ export const Remote =
        handleVolumeDown,
        handleMute,
        mute,
-       handleFastForward
+       handleForward,
+       handleRewind
     }) => {
 
     const playIcons = playing ? 
@@ -44,10 +45,10 @@ export const Remote =
             <StyledImg src="https://fontmeme.com/permalink/201007/11ecf2dbc6b00f5b001353ba4805f2bb.png" alt="netflix-font" border="0" />
             <Light blink={blink} />
             <SeekButtonContainer>
-                <HorizontalButton>
+                <HorizontalButton onClick={handleRewind}>
                     <Icon icon="rewindIcon" size="30px" color="white" />
                 </HorizontalButton>
-                <HorizontalButton onClick={handleFastForward}>
+                <HorizontalButton onClick={handleForward}>
                     <Icon icon="fastForwardIcon" size="30px" color="white" />
                 </HorizontalButton>
             </SeekButtonContainer>

@@ -16,14 +16,14 @@ const HomePage =
         setMute,
         playBackRate,
         setPlayBackRate,
-        played,
-        setPlayed,
+        seekTo,
+        setSeekTo,
         currentTime,
         setCurrentTime,
     }) => {
     
     // ref for video player
-    const videoRef = React.createRef();
+    const videoRef = React.useRef();
     
     // video timer id to capture id of setInterval
     const timerRef = React.useRef(null);
@@ -31,14 +31,20 @@ const HomePage =
     /* While video is playing and videoRef exists, send amount of 
        time video has played to backend every second */
     useEffect(() => {
-        if (videoRef && playing) {
+        if (videoRef.current && playing) {
             timerRef.current = setInterval(() => {
                 socket.emit('current-time', videoRef.current.getCurrentTime());
             }, 1000)
-        } else if (!playing && timerRef.current) {
-            clearInterval(timerRef.current)
+        } else {
+            clearInterval(timerRef.current);
         }
-    }, [playing, videoRef])
+    }, [playing, videoRef]);
+
+    /* UseEffect for skipping forward in video, when seekTo state changes 
+       seek video to seekTo value */
+    useEffect(() => {
+        videoRef.current.seekTo(seekTo);
+    }, [seekTo]);
 
     // method for socket.io connections
     useEffect(() => {
@@ -50,7 +56,6 @@ const HomePage =
             setVolume(data.volume);
             setPlayBackRate(data.playBackRate);
             setCurrentTime(data.currentTime);
-            setPlayed(data.currentTime);
         });
         /* when client connects to socket, receive default state from 
            backend */
@@ -76,9 +81,13 @@ const HomePage =
         socket.on("mute", () => {
             setMute(!mute);
         });
-        /* When the fastforward button is pressed, update the playBackRate state */
-        socket.on("fast-forward", playBackRateReceived => {
-            setPlayBackRate(playBackRateReceived);
+        /* When the forward button is pressed, update the seekTo state */
+        socket.on("forward", seekToReceived => {
+            setSeekTo(seekToReceived);
+        });
+        /* When the rewind button is pressed, update the seekTo state */
+        socket.on("rewind", seekToReceived => {
+            setSeekTo(seekToReceived);
         });
         /* When the current time is sent to frontend every second, update the 
            currentTime state every second on client while video is playing */
