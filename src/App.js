@@ -18,8 +18,6 @@ function App() {
   const [volume, setVolume] = useState(0.8);
   // state of mute for video
   const [mute, setMute] = useState(false);
-  // state for playback rate of video
-  const [playBackRate, setPlayBackRate] = useState(1);
   // state for setting time to jump forward or backward in video
   const [seekTo, setSeekTo] = useState(0);
   // state for current video time played so far
@@ -40,11 +38,8 @@ function App() {
             setVolume={setVolume}
             mute={mute}
             setMute={setMute}
-            playBackRate={playBackRate}
-            setPlayBackRate={setPlayBackRate}
             seekTo={seekTo}
             setSeekTo={setSeekTo}
-            currentTime={currentTime}
             setCurrentTime={setCurrentTime}
           />
         } />
@@ -59,9 +54,6 @@ function App() {
             setVolume={setVolume}
             mute={mute}
             setMute={setMute}
-            playBackRate={playBackRate}
-            setPlayBackRate={setPlayBackRate}
-            seekTo={seekTo}
             setSeekTo={setSeekTo}
             currentTime={currentTime}
             setCurrentTime={setCurrentTime}

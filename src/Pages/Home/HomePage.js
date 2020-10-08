@@ -14,11 +14,8 @@ const HomePage =
         setVolume,
         mute,
         setMute,
-        playBackRate,
-        setPlayBackRate,
         seekTo,
         setSeekTo,
-        currentTime,
         setCurrentTime,
     }) => {
     
@@ -54,7 +51,6 @@ const HomePage =
             setUrl(data.url);
             setPlaying(data.playing);
             setVolume(data.volume);
-            setPlayBackRate(data.playBackRate);
             setCurrentTime(data.currentTime);
         });
         /* when client connects to socket, receive default state from 
@@ -87,6 +83,9 @@ const HomePage =
         });
         /* When the rewind button is pressed, update the seekTo state */
         socket.on("rewind", seekToReceived => {
+            /* If the data sent from backend & the current seekTo state is 0
+               start the video from the beginning */
+            if ((seekToReceived && seekTo) === 0) videoRef.current.seekTo(0);
             setSeekTo(seekToReceived);
         });
         /* When the current time is sent to frontend every second, update the 
@@ -106,7 +105,6 @@ const HomePage =
                          height="601px"
                          volume={volume}
                          muted={mute}
-                         playbackRate={playBackRate}
                          ref={videoRef}
             />
             <div style={{color: 'white'}}>

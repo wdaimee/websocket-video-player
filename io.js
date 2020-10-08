@@ -6,7 +6,6 @@ const state = {
     playing: false,
     volume: 0.8,
     mute: false,
-    playBackRate: 1,
     currentTime: 0,
     seekTo: 0
 }
@@ -59,7 +58,7 @@ io.on("connection", function(socket) {
     });
     // When the played timer is sent back to database, set state object to played timer and emit to clients
     socket.on('current-time', currentTime => {
-        state.currentTime = currentTime;
+        state.currentTime = parseInt(currentTime);
         socket.broadcast.emit('current-time', state.currentTime);
     });
     socket.on("disconnect", () => {

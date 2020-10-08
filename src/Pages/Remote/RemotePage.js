@@ -16,9 +16,6 @@ const RemotePage =
         setVolume,
         mute,
         setMute,
-        playBackRate,
-        setPlayBackRate,
-        seekTo,
         setSeekTo,
         currentTime,
         setCurrentTime,
@@ -103,13 +100,12 @@ const RemotePage =
             setUrl(data.url);
             setPlaying(data.playing);
             setVolume(data.volume);
-            setPlayBackRate(data.playBackRate);
             setCurrentTime(data.currentTime);
         });
         /* When url is update by remote, receive the url from backend and 
         update local state for url */
-        socket.on("url changed", data => {
-            setUrl(data);
+        socket.on("url changed", url => {
+            setUrl(url);
         });
         /* When the play/pause button is pressed, 
            toggle the boolean value of playing state*/
