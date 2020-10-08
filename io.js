@@ -3,9 +3,9 @@ const io = require('socket.io')();
 // initial state of app
 const state = {
     url: 'https://www.youtube.com/watch?v=Zk4Gufx-O2k',
-    playing: false,
+    playing: true,
     volume: 0.8,
-    mute: false,
+    mute: true,
     currentTime: 0,
     seekTo: 0
 }
@@ -60,6 +60,10 @@ io.on("connection", function(socket) {
     socket.on('current-time', currentTime => {
         state.currentTime = parseInt(currentTime);
         socket.broadcast.emit('current-time', state.currentTime);
+    });
+    // When the player/client is checking the mute state, send state.mute to front end
+    socket.on('check-mute', () => {
+        socket.broadcast.emit('check-mute', state.mute);
     });
     socket.on("disconnect", () => {
         console.log("disconnected");

@@ -13,11 +13,11 @@ function App() {
   // state for URL for video that is playing
   const [url, setUrl] = useState('');
   // state if video is playing or paused
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
   // state for volume of video
   const [volume, setVolume] = useState(0.8);
   // state of mute for video
-  const [mute, setMute] = useState(false);
+  const [mute, setMute] = useState(true);
   // state for setting time to jump forward or backward in video
   const [seekTo, setSeekTo] = useState(0);
   // state for current video time played so far

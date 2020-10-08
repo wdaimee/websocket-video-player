@@ -99,9 +99,10 @@ const RemotePage =
         socket.on("connected", data => {
             setUrl(data.url);
             setPlaying(data.playing);
+            setMute(data.mute);
             setVolume(data.volume);
             setCurrentTime(data.currentTime);
-        });
+        });   
         /* When url is update by remote, receive the url from backend and 
         update local state for url */
         socket.on("url changed", url => {

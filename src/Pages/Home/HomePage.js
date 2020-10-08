@@ -18,6 +18,12 @@ const HomePage =
         setSeekTo,
         setCurrentTime,
     }) => {
+
+    /* When a secondary video starts playing, check the mute state
+       in the backend to start or keep auto muted automatically */
+    // setTimeout(() => {
+    //     socket.emit('check-mute');
+    // }, 1000);
     
     // ref for video player
     const videoRef = React.useRef();
@@ -45,16 +51,18 @@ const HomePage =
 
     // method for socket.io connections
     useEffect(() => {
-        /* when client connects to socket, receive video url and update
-           state of url */
+        /* when client connects to socket, receive default state from 
+           backend */
         socket.on("connected", data => {
             setUrl(data.url);
             setPlaying(data.playing);
             setVolume(data.volume);
             setCurrentTime(data.currentTime);
+            // Set seekTo to currentTime (syncs two video players together)
+            setSeekTo(data.currentTime);
         });
-        /* when client connects to socket, receive default state from 
-           backend */
+        /* when client connects to socket, receive video url and update
+        state of url */
         socket.on("url changed", data => {
             setUrl(data);
         });
@@ -86,12 +94,17 @@ const HomePage =
             /* If the data sent from backend & the current seekTo state is 0
                start the video from the beginning */
             if ((seekToReceived && seekTo) === 0) videoRef.current.seekTo(0);
-            setSeekTo(seekToReceived);
+            else setSeekTo(seekToReceived);
         });
         /* When the current time is sent to frontend every second, update the 
            currentTime state every second on client while video is playing */
         socket.on("current-time", currentTimeReceived => {
             setCurrentTime(currentTimeReceived);
+        });
+        /* If a second player is open, check the mute state of other players and
+           set video player mute true or false */
+        socket.on("check-mute", muteReceived => {
+            setMute(muteReceived);
         });
     });
 
@@ -106,6 +119,8 @@ const HomePage =
                          volume={volume}
                          muted={mute}
                          ref={videoRef}
+                         onReady={() => videoRef.current.seekTo(seekTo)}
+                         onPlay={() => socket.emit('check-mute')}
             />
             <div style={{color: 'white'}}>
                 Volume: {volume}
