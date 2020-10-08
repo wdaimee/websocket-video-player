@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { Title } from './HomePage.styles';
 
@@ -18,12 +18,6 @@ const HomePage =
         setSeekTo,
         setCurrentTime,
     }) => {
-
-    /* When a secondary video starts playing, check the mute state
-       in the backend to start or keep auto muted automatically */
-    // setTimeout(() => {
-    //     socket.emit('check-mute');
-    // }, 1000);
     
     // ref for video player
     const videoRef = React.useRef();
@@ -119,7 +113,11 @@ const HomePage =
                          volume={volume}
                          muted={mute}
                          ref={videoRef}
+                         /* When a second video plays, seek the video to the first
+                            play to sync the videos on each player */
                          onReady={() => videoRef.current.seekTo(seekTo)}
+                         /* When a second video plays, seek the mute state to the first
+                            video so each video has the same mute state */
                          onPlay={() => socket.emit('check-mute')}
             />
             <div style={{color: 'white'}}>
