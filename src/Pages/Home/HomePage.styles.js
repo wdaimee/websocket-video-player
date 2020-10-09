@@ -7,3 +7,12 @@ export const Title = styled.h2`
     font-family: 'CircularStd', 'Helvetica';
     z-index: 1;
 `;
+
+// Styling for Volume and Mute Notification
+export const Info = styled.p`
+    z-index: 1;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+`;

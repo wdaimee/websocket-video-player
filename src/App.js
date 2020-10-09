@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import socketIOClient from 'socket.io-client';
 import { AppDiv } from './App.styles';
@@ -22,6 +22,11 @@ function App() {
   const [seekTo, setSeekTo] = useState(0);
   // state for current video time played so far
   const [currentTime, setCurrentTime] = useState(0);
+
+  // Update page tab title to "Todos!" when app mounts
+  useEffect(() => {
+    document.title = "PartyFlix"
+  });
 
   return (
     <AppDiv>

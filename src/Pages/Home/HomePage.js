@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ReactPlayer from 'react-player';
-import { Title } from './HomePage.styles';
+import { Title, Info } from './HomePage.styles';
 
 // Home Page content with Title and Video Player
 const HomePage = 
@@ -120,12 +120,12 @@ const HomePage =
                             video so each video has the same mute state */
                          onPlay={() => socket.emit('check-mute')}
             />
-            <div style={{color: 'white'}}>
-                Volume: {volume}
-            </div>
-            <div style={{color: 'white'}}>
+            <Info>
+                Volume: { volume * 100  }%
+            </Info>
+            <Info>
                 Muted: { mute ? 'True' : 'False'}
-            </div>
+            </Info>
         </>
     )
 }
