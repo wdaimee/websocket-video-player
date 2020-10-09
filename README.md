@@ -18,3 +18,11 @@ To checkout the app, follow the steps below:
 - Node.js
 - Express.js
 - Socket.io
+
+## Screenshots:
+
+### Video Page (Main Page)
+![Imgur](https://i.imgur.com/bMy6el8.png)
+
+### Remote Page
+![Imgur](https://i.imgur.com/pPDU26B.png)

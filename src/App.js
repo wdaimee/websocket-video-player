@@ -23,7 +23,7 @@ function App() {
   // state for current video time played so far
   const [currentTime, setCurrentTime] = useState(0);
 
-  // Update page tab title to "Todos!" when app mounts
+  // Update page tab title to "PartyFlix" when app mounts
   useEffect(() => {
     document.title = "PartyFlix"
   });
