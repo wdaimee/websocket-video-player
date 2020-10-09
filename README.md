@@ -2,7 +2,7 @@
 
 ## About:
 
-Partyflix is a party video player where multiple users can control the video that is playing. A user can change the video playing by entering a YouTube url, this will change the video being viewed by all users. Users who grab a remote can control the video player through the remote. Users can play/pause, increase/decrease volume, mute the volume, or seek through the video. Socket.io was used for the live user interaction of the video player. The frontend was created with React and the backend uses Node/Express.
+PartyFlix is a party video player where multiple users can control the video that is playing. A user can change the video playing by entering a YouTube url, this will change the video being viewed by all users. Users who grab a remote can control the video player through the remote. Users can play/pause, increase/decrease volume, mute the volume, or seek through the video. Socket.io was used for the live user interaction of the video player. The frontend was created with React and the backend uses Node/Express.
 
 ## Checkout the App:
 
